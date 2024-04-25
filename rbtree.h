@@ -94,12 +94,12 @@ public:
 				len = *it;
 			else if (len != *it)
 			{
-				std::cout << "check_rb_feature_5 failed: " << std::endl;
+//				std::cout << "check_rb_feature_5 failed: " << std::endl;
 				return;
 			}
 		}	
 
-		std::cout << "check_rb_feature_5 success, black node count:  " << len << std::endl;
+//		std::cout << "check_rb_feature_5 success, black node count:  " << len << std::endl;
 	}
 	
 private:
@@ -404,7 +404,7 @@ private:
 		if (nullptr != p)
 		{
 			mid_visit_node(p->l_child_);
-			std::cout << p->data_ << std::endl;
+//			std::cout << p->data_ << std::endl;
 			mid_visit_node(p->r_child_);
 		}
 	}
