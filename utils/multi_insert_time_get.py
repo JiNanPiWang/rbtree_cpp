@@ -62,6 +62,14 @@ def calc_insert_time_us(n, key_count, distribution_type, thread_num, file_path):
     return avg_time    
 
 
+def get_insert_mem_MBs(key_count, distribution_type, thread_num, file_path):
+    stdout = run_example(key_count, distribution_type, thread_num, file_path)
+    match = re.search(r'Total memory used: (\d+\.\d+)', stdout)
+    if match:
+        return float(match.group(1))
+    raise ValueError("insert time not found in the output")
+
+
 if __name__ == '__main__':
     utc_plus_8 = timezone(timedelta(hours=8))
     thread_num = [1]
@@ -81,5 +89,7 @@ if __name__ == '__main__':
 
             n = 10
             avg_insert_time = calc_insert_time_us(n, keys_count, 0, num, file_path)
+            mem = get_insert_mem_MBs(keys_count, 0, num, file_path)
 
-            logging.info(f"ROWEX average insert Time: {avg_insert_time} us")
+            logging.info(f"rbtree average insert Time: {avg_insert_time} us")
+            logging.info(f"rbtree memory used: {mem} MB")
