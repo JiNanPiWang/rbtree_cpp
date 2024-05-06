@@ -3,12 +3,11 @@
 #include <chrono>
 #include <ctime>
 
-const int max_len = 5000000;
-long long data[max_len + 10];
 
 int main(int argc, char *argv[])
 {
-    auto n = max_len;
+    uint64_t n = std::atoll(argv[1]);
+    uint64_t *data = new uint64_t[n];
     rb_tree<long long> tree;
     std::cout << "test_rb_tree: insert" << std::endl;
 
@@ -17,12 +16,12 @@ int main(int argc, char *argv[])
         // dense, sorted
         data[i] = i + 1;
     }
-    if (atoi(argv[1]) == 1)
+    if (atoi(argv[2]) == 1)
     {
         // dense, random
         std::random_shuffle(data, data + n);
     }
-    if (atoi(argv[1]) == 2)
+    if (atoi(argv[2]) == 2)
     {
         // "pseudo-sparse" (the most-significant leaf bit gets lost)
         for (uint64_t i = 0; i < n; i++)
@@ -30,7 +29,7 @@ int main(int argc, char *argv[])
     }
 
     auto start = std::chrono::system_clock::now();
-    for (auto i = 0; i < max_len; ++i)
+    for (auto i = 0; i < n; ++i)
     {
         tree.insert(data[i]);
     }
@@ -39,9 +38,9 @@ int main(int argc, char *argv[])
     std::cout << "Elapsed time for insertion: " << elapsed_seconds.count() << "s\n";
 
     // std::cout << "Size of tree node: " << sizeof(rb_tree_node<long long>) << " bytes" << std::endl;
-    std::cout << "Total memory used: " << (double)sizeof(rb_tree_node<long long>) * max_len / 1024 / 1024 << " MBs" << std::endl;
+    std::cout << "Total memory used: " << (double)sizeof(rb_tree_node<long long>) * n / 1024 / 1024 << " MBs" << std::endl;
 
-    for (auto i = 0; i < max_len; ++i)
+    for (auto i = 0; i < n; ++i)
     {
         auto debug = data[i];
         tree.erase(debug);
