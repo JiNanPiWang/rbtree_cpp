@@ -2,6 +2,7 @@
 #include <bits/stdc++.h>
 #include <chrono>
 #include <ctime>
+#include <iomanip>
 #include "utils/iptools.h"
 
 
@@ -17,18 +18,15 @@ int main(int argc, char *argv[])
 
     for (uint64_t i = 0; i < n; i++)
     {
-        // dense, sorted
         // data[i] = i + 1;
         data[i] = ips[i];
     }
     if (atoi(argv[2]) == 1)
     {
-        // dense, random
         std::random_shuffle(data, data + n);
     }
     if (atoi(argv[2]) == 2)
     {
-        // "pseudo-sparse" (the most-significant leaf bit gets lost)
         for (uint64_t i = 0; i < n; i++)
             data[i] = (static_cast<uint64_t>(rand()) << 32) | static_cast<uint64_t>(rand());
     }
@@ -39,8 +37,8 @@ int main(int argc, char *argv[])
         tree.insert(data[i]);
     }
     auto end = std::chrono::system_clock::now();
-    std::chrono::duration<double, std::micro> elapsed_microseconds = end - start; // 修改这里
-    std::cout << "insert time: " << elapsed_microseconds.count() << "us\n"; // 修改这里
+    std::chrono::duration<double, std::micro> elapsed_microseconds = end - start; 
+    std::cout << "insert time: " << std::fixed << std::setprecision(2) << elapsed_microseconds.count() << "us\n";
 
     // std::cout << "Size of tree node: " << sizeof(rb_tree_node<long long>) << " bytes" << std::endl;
     std::cout << "Total memory used: " << (double)sizeof(rb_tree_node<long long>) * n / 1024 / 1024 << " MBs" << std::endl;
