@@ -1,4 +1,4 @@
-# rbtree
+# rbtree copied from [rbtree](https://github.com/zhaozhencn/rbtree)
 
 ## a data container with red-black tree.
 
